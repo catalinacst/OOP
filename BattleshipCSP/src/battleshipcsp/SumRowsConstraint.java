@@ -4,26 +4,19 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 import java.util.ArrayList;
-import java.util.List;
-
-/**
- *
- * @author catalina
- */
 
 public class SumRowsConstraint implements Constraint {
     
     ArrayList<Variable> scope = new ArrayList<Variable> ();
-    //public ArrayList<Variable> scope;
-    Integer sumRow;
-    Object value1 = new Object();
-    Object value2 = new Object();
-    
+    ArrayList<Integer> assignRow = new ArrayList<Integer> ();
+    int[] sumRow;
+    int lengthBoard;
     
     // constructor
-    public SumRowsConstraint(ArrayList<Variable> row, Integer sumRow){
+    public SumRowsConstraint(ArrayList<Variable> row, int[] sumRow){
         this.scope = row;
         this.sumRow = sumRow;
+        this.lengthBoard = sumRow.length;
     }
     
     @Override
@@ -31,50 +24,36 @@ public class SumRowsConstraint implements Constraint {
         return scope;
     }
     
-    /*
-    Object value1 = assignment.getAssignment(var1);
-	return value1 == null || !value1.equals(assignment.getAssignment(var2));
-    */
-
-    // en assignedRows se estan añadiendo todas las asignaciones que se le dieron a cada una de 
-    // las variables, las cuales estaban en row 
-    /*
     @Override
-    public boolean isSatisfiedWith(Assignment a) {
-        System.out.println("h");
+    public boolean isSatisfiedWith(Assignment a) {        
         for(int i = 0; i < scope.size(); i++){
-            assignedRows.add(a.getAssignment(scope.get(i)));
+            Integer value = (Integer)a.getAssignment(scope.get(i));
+            assignRow.add(i,value);
         }
-        int sumRowTotal = 0;
-        Integer aux = 0;
-        
-        for(int i = 0; i < assignedRows.size(); i++){
-            if ( (Integer) assignedRows.get(i) != aux)
-                sumRowTotal++;
+        // {x1 x2 x3 x4  x5 x6 x7 x8  x9 x10 x11 x12  x13 x14 x15 x16}
+        //  0  1  2  3   4  5  6  7   8   9  10  11   12  13  14  15
+        /*
+         {  x1  x2  x3  x4
+            x5  x6  x7  x8
+            x9  x10 x11 x12
+            x13 x14 x15 x16
+        */
+        int indice = 0;
+        int aux = 0;
+        int lengthBoardAUX = lengthBoard;
+        for(int i = 0; i < lengthBoard; i++){
+            Integer cont = 0;
+            for(int j = aux; j < lengthBoardAUX; j++, indice++){
+                if(assignRow.get(j) == null)
+                    return true;
+                else
+                    if(assignRow.get(j) == 1)
+                        cont++;
+            }
+            aux = indice;
+            lengthBoardAUX = lengthBoardAUX + lengthBoard;
+            if (cont != sumRow[i]) return false; // si no cumple con la condición hasta este punto, retorne falso
         }
-        for(int i = 0; i < assignedRows.size(); i++){
-            System.out.println(assignedRows.get(i));
-
-        
-        return sumRowTotal == sumRow;
-    }*/
-    
-    
-    @Override
-    public boolean isSatisfiedWith(Assignment a) {
-                
-        value1 = a.getAssignment(scope.get(0));
-        value2 = a.getAssignment(scope.get(1));
-        //System.out.println(value1);
-        //System.out.println(value2);
-        //Object value3 = a.getAssignment(scope.get(4));
-        
-        //return !value1.equals(value2);
-        //int num = (int)value1 + (int) value2;
-        //System.out.println(num);
-        return !value1.equals(value2);
-        
+        return true;
     }
-    
-    
 }
