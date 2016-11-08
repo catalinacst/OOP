@@ -57,18 +57,20 @@ public class BattleshipCSP {
                     System.out.println("El archivo no existe");
                 }
             }
+            /*
             else
                 if(entrada == 3){
                     BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
                     String url = teclado.readLine();
                     URL baseURL = new URL(url);
-                    InputWebPage input = new InputWebPage(baseURL);
+                    InputWeb input = new InputWeb(baseURL);
                     lengthBoard = input.lengthBoard;
                     numShipsInit = input.numShipsInit;
                     lengthShips = input.lengthShips;
                     constraintsRow = input.constraintsRow;
                     constraintsColumn = input.constraintsColumn;
                 }
+        */
         /*
         Posibles casos de prueba
         Para comprobarlos seria comentar la parte de arriba de las entradas 

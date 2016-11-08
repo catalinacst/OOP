@@ -20,8 +20,7 @@ El proceso para modelarlo por restricciones fue el siguiente:
 
   - Y por último, se procede a crear las restricciones
     - Primera restricción (La suma de las filas)
-      Se recibe una configuración inicial de tablero en la cual se recibe la condición que debe tener cada una
-      de las filas para obtener una solución correcta
+      Se recibe una configuración inicial de tablero en la cual se recibe la condición que debe tener cada una de las filas para obtener una solución correcta
       Ejemplo, se da un tablero como el siguiente
                0 1 0 0   1
                0 0 0 1   1
@@ -33,8 +32,7 @@ El proceso para modelarlo por restricciones fue el siguiente:
                La entrada seria rowsConstraint {1, 1, 1, 2}
 
     - Segunda restricciones (La suma de las columnas)
-      Se recibe una configuración inicial de tablero en la cual se recibe la condición que debe tener cada una
-      de las columnas para obtener una solución correcta
+      Se recibe una configuración inicial de tablero en la cual se recibe la condición que debe tener cada una de las columnas para obtener una solución correcta
       Ejemplo, se da un tablero como el siguiente
                 0 1 0 0   1
                 0 0 0 1   1
@@ -48,9 +46,7 @@ El proceso para modelarlo por restricciones fue el siguiente:
                 La entrada seria ColumnConstraint {1, 2, 0, 2}
 
     - Tercera y última restricción (Todos los barcos con sus respectivos tamaños deben ser usados)
-      Conociendo que las soluciones pueden generar muchas veces tableros equivocados solo con cumplir
-      las condiciones de filas y columnas, se hace una tercera restricción en la cual se verifica que todos
-      los barcos con sus respectivos tamaños fueron usados
+      Conociendo que las soluciones pueden generar muchas veces tableros equivocados solo con cumplir las condiciones de filas y columnas, se hace una tercera restricción en la cual se verifica que todos los barcos con sus respectivos tamaños fueron usados
       Ejemplo,  se da un tablero como el siguiente
                 0 1 0 1   2
                 0 0 0 1   1
