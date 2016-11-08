@@ -1,9 +1,15 @@
 package battleshipcsp;
 
+/**
+ *
+ * @author Catalina Castro Arias
+ */
+
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
+import aima.core.search.csp.ImprovedBacktrackingStrategy;
 import aima.core.search.csp.Variable;
 
 import java.util.ArrayList;
@@ -17,6 +23,7 @@ public class CSP_Problem {
     
     // tamaños de los barcos
     int[] lengthShips;  
+    
     // configuracion filas
     int[] constraintsRow;
     
@@ -28,21 +35,16 @@ public class CSP_Problem {
     
     public Domain ships;
     
-    // Arreglo de variascopebles
+    // Arreglo de variables
     public ArrayList<Variable> board = new ArrayList<Variable> ();
     
     // Arreglo de posibles dominios
-    public ArrayList<Integer> listDomain = new ArrayList<Integer> ();
+    public ArrayList<Integer> listDomain = new ArrayList<Integer> ();    
     
-        
-    // Arreglo de variables auxiliares
-    public ArrayList<Variable> subBoard = new ArrayList<Variable> ();
-    
-    
-    // creación de variables var = {x1, x2, ... xn}, siendo n = tamaño tablero * tamaño tablero
+    // constructor
     public CSP_Problem(int lengthBoard, int numShipsInit, int[] lengthShips, int[] constraintsRow, int[] constraintsColumn){ 
         
-        // creacion de variables 
+        // creación de variables var = {x1, x2, ... xn}, siendo n = tamaño tablero * tamaño tablero
         for(int i = 0; i < lengthBoard * lengthBoard; i++){
             Variable Xi = new Variable("X"+i);
             board.add(Xi);
@@ -66,7 +68,7 @@ public class CSP_Problem {
         // creación de un counting sort con el tamaño de los barcos y la cantidad que existen
         // siendo la posición su tamaño y el contenido la cantidad de barcos que hay de ese tamaño
         for(int i = 0; i < numShipsInit; i++){
-            setShips[lengthShips[i]] = setShips[lengthShips[i]] + 1;
+            setShips[lengthShips[i] - 1] = setShips[lengthShips[i] - 1] + 1;
         }
         
         // asigna según la cantidad de barcos, los posibles dominios que podra tener la solución
@@ -81,22 +83,29 @@ public class CSP_Problem {
         }
         
         // asignacion restricciones
-        //csp.addConstraint(C1);
         csp.addConstraint(new SumRowsConstraint(board, constraintsRow));
         csp.addConstraint(new SumColumnConstraint(board, constraintsColumn));
         csp.addConstraint(new AllShipsConstraint(board, setShips, lengthBoard, numShipsInit));
         
-        solver();
     } 
     
-    public void solver(){
+    public void solverBacktrackingStrategy(){
         Assignment results = new BacktrackingStrategy().solve(csp);
         for(int i = 0; i < board.size(); i++){
             System.out.print(results.getAssignment(board.get(i)));
             if((i+1)%lengthBoard == 0)
                 System.out.println("");
         }
-        //  System.out.println("\n"+results.getVariables());        
+        //System.out.println("\n"+results.getVariables());        
+    }
+    
+    public void solverImprovedBacktrackingStrategy(){
+        Assignment results = new ImprovedBacktrackingStrategy().solve(csp);
+        for(int i = 0; i < board.size(); i++){
+            System.out.print(results.getAssignment(board.get(i)));
+            if((i+1)%lengthBoard == 0)
+                System.out.println("");
+        }  
     }
 
 }
