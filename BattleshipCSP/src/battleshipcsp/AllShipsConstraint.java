@@ -53,6 +53,7 @@ public class AllShipsConstraint implements Constraint {
     public int Horizontal(int i, int tamBoardAux){
         int cont = 0;
         for(int k = i; k < tamBoardAux; k++){
+            if (board.get(k) == null) return -1;
             if(board.get(k) == 1){
                 cont++;
                 visited.add(k);
@@ -60,9 +61,6 @@ public class AllShipsConstraint implements Constraint {
             else
                 if(board.get(k) == 0)
                     return cont;
-                else
-                    if(board.get(k) == null)
-                        return -1;
         }
         return cont;
     }
@@ -71,6 +69,7 @@ public class AllShipsConstraint implements Constraint {
     public int Vertical(int i){
         int cont = 0;
         for(int k = i; k < board.size(); k = k + lengthBoard){
+            if(board.get(k) == null) return -1; 
             if(board.get(k) == 1){
                 cont++;
                 visited.add(k);
@@ -78,9 +77,6 @@ public class AllShipsConstraint implements Constraint {
             else
                 if(board.get(k) == 0)
                     return cont;
-                else
-                    if(board.get(k) == null)
-                        return -1;
         }
         return cont;
     }
@@ -96,8 +92,11 @@ public class AllShipsConstraint implements Constraint {
 
     @Override
     public boolean isSatisfiedWith(Assignment a) {
-    
+        
+        ArrayList<Integer> visited = new ArrayList<Integer> ();
+        
         int[] setShips = new int[lengthBoard];
+        
         for (int i = 0; i < lengthBoard; i++) 
             setShips[i] = setShips2[i];
         
@@ -106,51 +105,58 @@ public class AllShipsConstraint implements Constraint {
             board.add(i, value);
         }
         
-        for(int i = 0; i < scope.size(); i++){
+        /*
+        for(int i = 0; i < board.size(); i++){
             if(board.get(i) == null)
                 return true;
-            else{
-                if(board.get(i) == 1){
-                    if(!(posVisited(i))){
-                        visited.add(i);
-                        if(i < (tamBoardAux - 1)){
-                            if(board.get(i + 1) == null)
-                                return true;
-                            if(board.get(i + 1) == 1)
-                                ship = Horizontal(i,tamBoardAux);
-                            else{
-                                if(board.get(i + lengthBoard) == null)
-                                    return true;
-                                if((i + lengthBoard) < board.size() && board.get(i + lengthBoard) == 1)
-                                    ship = Vertical(i);
-                                else
-                                    ship = 1;
-                            }                       
-                        }
+        }
+        */
+        
+        for(int i = 0; i < board.size(); i++){
+            if (board.get(i) == null)
+                return true;
+            if(board.get(i) == 1){
+                if(!(posVisited(i))){
+                    visited.add(i);
+                    if(i < (tamBoardAux - 1)){
+                        if (board.get(i + 1) == null)
+                            return true;
+                        if(board.get(i + 1) == 1)
+                            ship = Horizontal(i,tamBoardAux);
                         else{
                             if(board.get(i + lengthBoard) == null)
                                 return true;
-                            if(i + lengthBoard < board.size() && board.get(i + lengthBoard) == 1)
+                            if((i + lengthBoard) < board.size() && board.get(i + lengthBoard) == 1)
                                 ship = Vertical(i);
                             else
                                 ship = 1;
-                        }
-                        if(ship == -1) // entonces es porque hay una variable null
-                            return true;
-                        if(FindShips(ship, setShips))
-                            numShips++;
-                        else
-                            return false;
-                            //System.out.println("Hay un barco demás");
+                        }                       
                     }
+                    else{
+                        if(board.get(i + lengthBoard) == null)
+                            return true;
+                        if(i + lengthBoard < board.size() && board.get(i + lengthBoard) == 1)
+                            ship = Vertical(i);
+                        else
+                            ship = 1;
+                    }
+                    if(ship == -1)
+                        return true;
+                    if(FindShips(ship, setShips))
+                        numShips++;
+                    else
+                        return false;
+                        //System.out.println("Hay un barco demás");
                 }
-                ship = 0;
-                if(i == tamBoardAux - 1)
-                    tamBoardAux = tamBoardAux + lengthBoard;
             }
+            ship = 0;
+            if(i == tamBoardAux - 1)
+                tamBoardAux = tamBoardAux + lengthBoard;
         }
-        if (numShips != numShipsInit)
+        if (numShips != numShipsInit){
+            System.out.println("Num Ships = " + numShips);
             return false;
+        }
         else
             return true;
     }

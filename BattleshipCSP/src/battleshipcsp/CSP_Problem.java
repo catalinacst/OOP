@@ -1,7 +1,5 @@
 package battleshipcsp;
 
-// https://github.com/aimacode/aima-java
-
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
