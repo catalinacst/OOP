@@ -65,6 +65,4 @@ El proceso para modelarlo por restricciones fue el siguiente:
 Como último paso se procede a solucionarlo por medio de la implementación BacktrackingStrategy.java de la misma libreria como primer método
 y como segundo método se le da solución por medio de la implementacion ImprovedBacktrackingStrategy.java de la misma liberia.
 
-Muchas gracias Profesor!!
 
-María Catalina Castro Arias
