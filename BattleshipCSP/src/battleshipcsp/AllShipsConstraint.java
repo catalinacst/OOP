@@ -116,53 +116,42 @@ public class AllShipsConstraint implements Constraint {
                         if(i < (tamBoardAux - 1)){
                             if(board.get(i + 1) == null)
                                 return true;
-                            if(board.get(i + 1) == 1){
+                            if(board.get(i + 1) == 1)
                                 ship = Horizontal(i,tamBoardAux);
-                            }
                             else{
                                 if(board.get(i + lengthBoard) == null)
                                     return true;
-                                if((i + lengthBoard) < board.size() && board.get(i + lengthBoard) == 1){
+                                if((i + lengthBoard) < board.size() && board.get(i + lengthBoard) == 1)
                                     ship = Vertical(i);
-                                }
-                                else{
+                                else
                                     ship = 1;
-                                }
                             }                       
                         }
                         else{
                             if(board.get(i + lengthBoard) == null)
                                 return true;
-                            if(i + lengthBoard < board.size() && board.get(i + lengthBoard) == 1){
+                            if(i + lengthBoard < board.size() && board.get(i + lengthBoard) == 1)
                                 ship = Vertical(i);
-                            }
-                            else{
+                            else
                                 ship = 1;
-                            }
                         }
-                        if(ship == -1){ // entonces es porque hay una variable null
+                        if(ship == -1) // entonces es porque hay una variable null
                             return true;
-                        }
-                        if(FindShips(ship, setShips)){
+                        if(FindShips(ship, setShips))
                             numShips++;
-                        }
-                        else{
+                        else
                             return false;
-                        }
                             //System.out.println("Hay un barco demás");
                     }
                 }
                 ship = 0;
-                if(i == tamBoardAux - 1){
+                if(i == tamBoardAux - 1)
                     tamBoardAux = tamBoardAux + lengthBoard;
-                }
             }
         }
-        if (numShips != numShipsInit){
+        if (numShips != numShipsInit)
             return false;
-        }
-        else{
+        else
             return true;
-        }
     }
 }
