@@ -1,5 +1,3 @@
-Parcial II - Programación 4
-
 Solución al problema de batalla naval por dos métodos.
 
 Se implementó la libreria aima https://github.com/aimacode/aima-java
